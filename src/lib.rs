@@ -28,15 +28,16 @@
 //! // draw to a window/image using canvas.buffer
 //! ```
 
-pub mod color;
-pub mod math;
-pub mod point;
+mod color;
+mod math;
+mod point;
 pub mod texture;
-pub mod vertex;
+mod vertex;
 
-use color::Color;
+pub use color::Color;
+pub use point::Point2D;
 use texture::{Texture, TextureFormat};
-use vertex::Vertex;
+pub use vertex::Vertex;
 
 /// A canvas to draw triangles onto
 pub struct SoftTriCanvas {

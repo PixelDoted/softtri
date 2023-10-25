@@ -1,6 +1,6 @@
 use std::num::NonZeroU32;
 
-use softtri::{texture::TextureFormat, vertex::Vertex, SoftTriCanvas};
+use softtri::{texture::TextureFormat, SoftTriCanvas, Vertex};
 use winit::{
     dpi::PhysicalSize,
     event::{Event, WindowEvent},

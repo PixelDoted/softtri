@@ -1,6 +1,6 @@
 use std::io::Write;
 
-use softtri::{texture::TextureFormat, vertex::Vertex, SoftTriCanvas};
+use softtri::{texture::TextureFormat, SoftTriCanvas, Vertex};
 
 fn main() {
     let width = 1280;

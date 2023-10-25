@@ -1,14 +1,11 @@
 [package]
 name = "softtri"
 version = "0.1.0"
-categories = ["2d", "graphics", "renderer"]
 description = "a software triangle renderer"
 edition = "2021"
 license = "MIT"
 documentation = "https://docs.rs/softtri"
 repository = "https://github.com/PixelDoted/softtri"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 indexmap = "2.0.2"
@@ -27,6 +24,3 @@ name = "bench"
 
 [[example]]
 name = "softbuffer"
-
-[profile.release]
-debug = true
