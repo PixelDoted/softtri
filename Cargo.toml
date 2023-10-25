@@ -1,0 +1,27 @@
+[package]
+name = "softtri"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+indexmap = "2.0.2"
+rand = "0.8.5"
+rayon = "1.8.0"
+
+[dev-dependencies]
+winit = "0.28"
+softbuffer = "0.3"
+
+[[example]]
+name = "triangle"
+
+[[example]]
+name = "bench"
+
+[[example]]
+name = "softbuffer"
+
+[profile.release]
+debug = true
