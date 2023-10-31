@@ -4,13 +4,13 @@ use softtri::{texture::TextureFormat, SoftTriCanvas, Vertex};
 use winit::{
     dpi::PhysicalSize,
     event::{Event, WindowEvent},
-    event_loop::EventLoop,
+    event_loop::{ControlFlow, EventLoop},
     window::WindowBuilder,
 };
 
 fn main() {
     // Winit
-    let event_loop = EventLoop::new();
+    let event_loop = EventLoop::new().unwrap();
     let window = WindowBuilder::new().build(&event_loop).unwrap();
     window.set_resizable(false);
 
@@ -47,33 +47,36 @@ fn main() {
         .unwrap();
 
     // Event Loop
-    event_loop.run(move |event, _, control_flow| match event {
-        Event::WindowEvent {
-            event: WindowEvent::CloseRequested,
-            ..
-        } => {
-            control_flow.set_exit();
-        }
-        Event::MainEventsCleared => {
-            let now = std::time::Instant::now();
-            let mut canvas = SoftTriCanvas::new(width, height, TextureFormat::RGBA);
-            canvas.draw_tri(&v0, &v1, &v2, None);
-
-            let mut buffer = surface.buffer_mut().unwrap();
-            for i in 0..(width * height) {
-                let j = i * 4;
-                let pixel = &canvas.buffer[j as usize..j as usize + 4];
-                let red = pixel[0] as u32;
-                let green = pixel[1] as u32;
-                let blue = pixel[2] as u32;
-                let alpha = pixel[3] as u32;
-
-                buffer[i as usize] = blue | (green << 8) | (red << 16) | (alpha << 24);
+    event_loop.set_control_flow(ControlFlow::Poll);
+    event_loop
+        .run(move |event, elwt| match event {
+            Event::WindowEvent {
+                event: WindowEvent::CloseRequested,
+                ..
+            } => {
+                elwt.exit();
             }
+            Event::AboutToWait => {
+                let now = std::time::Instant::now();
+                let mut canvas = SoftTriCanvas::new(width, height, TextureFormat::RGBA);
+                canvas.draw_tri(&v0, &v1, &v2, None);
 
-            buffer.present().unwrap();
-            println!("present {}s", now.elapsed().as_secs_f32());
-        }
-        _ => (),
-    });
+                let mut buffer = surface.buffer_mut().unwrap();
+                for i in 0..(width * height) {
+                    let j = i * 4;
+                    let pixel = &canvas.buffer[j as usize..j as usize + 4];
+                    let red = pixel[0] as u32;
+                    let green = pixel[1] as u32;
+                    let blue = pixel[2] as u32;
+                    let alpha = pixel[3] as u32;
+
+                    buffer[i as usize] = blue | (green << 8) | (red << 16) | (alpha << 24);
+                }
+
+                buffer.present().unwrap();
+                println!("present {}s", now.elapsed().as_secs_f32());
+            }
+            _ => (),
+        })
+        .unwrap();
 }
