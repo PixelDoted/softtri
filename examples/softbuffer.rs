@@ -21,12 +21,12 @@ fn main() {
     let v0 = Vertex::new(
         [cw, ch - 100.0].into(),
         [1.0, 0.0, 0.0, 1.0].into(),
-        [0.0, 0.0].into(),
+        [0.5, 0.0].into(),
     );
     let v1 = Vertex::new(
         [cw - 100.0, ch + 100.0].into(),
         [0.0, 1.0, 0.0, 1.0].into(),
-        [1.0, 0.0].into(),
+        [0.0, 1.0].into(),
     );
     let v2 = Vertex::new(
         [cw + 100.0, ch + 100.0].into(),

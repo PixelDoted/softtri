@@ -17,7 +17,7 @@ pub fn blend_alpha(a: Color, b: Color) -> Color {
     )
 }
 
-pub fn triangle_aabb(v0: &Vertex, v1: &Vertex, v2: &Vertex) -> (f32, f32, f32, f32) {
+pub fn triangle_aabb(v0: &Vertex, v1: &Vertex, v2: &Vertex) -> (i64, i64, i64, i64) {
     let (min_x, max_x) = (
         v0.point.x.min(v1.point.x).min(v2.point.x),
         v0.point.x.max(v1.point.x).max(v2.point.x),
@@ -27,7 +27,12 @@ pub fn triangle_aabb(v0: &Vertex, v1: &Vertex, v2: &Vertex) -> (f32, f32, f32, f
         v0.point.y.max(v1.point.y).max(v2.point.y),
     );
 
-    (min_x, max_x, min_y, max_y)
+    (
+        min_x.round() as i64,
+        max_x.round() as i64,
+        min_y.round() as i64,
+        max_y.round() as i64,
+    )
 }
 
 pub fn barycentric(

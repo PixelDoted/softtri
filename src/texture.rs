@@ -1,3 +1,5 @@
+use crate::{Color, Point2D};
+
 pub struct Texture {
     pub bytes: Vec<u8>,
     pub width: u32,
@@ -13,6 +15,13 @@ impl Texture {
             height,
             format,
         }
+    }
+
+    pub(crate) fn get_mixed(&self, uv: Point2D) -> Color {
+        let uv = uv * Point2D::new(self.width as f32 - 1.0, self.height as f32 - 1.0);
+        // TODO: Linear filtering
+        self.get_pixel(uv.x.round() as u32, uv.y.round() as u32)
+            .into()
     }
 
     /// Gets a 0..1 rgba pixel

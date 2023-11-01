@@ -86,12 +86,12 @@ impl SoftTriCanvas {
         let (min_x, max_x, min_y, max_y) = math::triangle_aabb(v0, v1, v2);
 
         // Draw triangle
-        for y in min_y as i64..max_y as i64 {
+        for y in min_y..=max_y {
             if y < 0 || y >= self.size[1] as i64 {
                 continue;
             }
 
-            for x in min_x as i64..=max_x as i64 {
+            for x in min_x..=max_x {
                 if x < 0 || x >= self.size[0] as i64 {
                     continue;
                 }
@@ -102,9 +102,7 @@ impl SoftTriCanvas {
 
                     if let Some(texture) = texture {
                         let uv = v0.uv * u1 / det + v1.uv * u2 / det + v2.uv * u3 / det;
-                        // TODO: Linear Filtering
-                        let pixel: Color = texture.get_pixel(uv.x as u32, uv.y as u32).into();
-                        rgba *= pixel;
+                        rgba *= texture.get_mixed(uv);
                     }
 
                     let pixel = self.get_pixel(x as u32, y as u32);
